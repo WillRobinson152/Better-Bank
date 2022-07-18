@@ -30,6 +30,26 @@ app.get("/account/create/:name/:email/:password", (req, res) => {
         });
 });
 
+//deposit
+app.get("/account/deposit/:email/:amount", (req, res) => {
+    dal.update(req.params.email,
+               Number(req.params.amount)).
+        then((user) => {
+            console.log(user);
+            res.send(user);
+        });
+});
+
+//withdraw
+app.get("/account/withdraw/:email/:amount", (req, res) => {
+    dal.update(req.params.email,
+               -1*Number(req.params.amount)).
+        then((user) => {
+            console.log(user);
+            res.send(user);
+        });
+});
+
 // login user
 // app.get("/account/login/:email/:password", (req, res) => {
 //     res.send({
