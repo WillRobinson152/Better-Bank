@@ -57,8 +57,15 @@ function LoginForm(props){
       let res = await fetch(url);
       let data = await res.json();
       console.log(data);
+      if (data.length === 0){
+        console.log('Incorrect email or password');
+        props.setStatus('fail!');
+        return;
+      }
+      props.setStatus('');
+      props.setShow(false);
     })();
-    props.setShow(false);
+    
   }
 
   return (<>
