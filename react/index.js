@@ -57,7 +57,13 @@ app.get("/account/withdraw/:email/:amount", (req, res) => {
 //         password:   req.params.password
 //     });
 // });
-
+app.get("/account/login/:email/:password", (req, res) => {
+    dal.login(req.params.email, req.params.password).
+        then((user) => {
+            console.log(user);
+            res.send(user);
+        })
+})
 
 
 // all accounts

@@ -21,6 +21,17 @@ function create(name, email, password){
     })
 }
 
+function login(email, password){
+    return new Promise((resolve, reject) => {    
+        const customers = db
+            .collection('users')
+            .find({email: email, password: password})
+            .toArray(function(err, docs) {
+                err ? reject(err) : resolve(docs);
+        });    
+    })
+}
+
 // find user account
 function find(email){
     return new Promise((resolve, reject) => {    
@@ -74,4 +85,4 @@ function all(){
     })
 }
 
-module.exports = {create, findOne, find, update, all};
+module.exports = {create, login, findOne, find, update, all};
