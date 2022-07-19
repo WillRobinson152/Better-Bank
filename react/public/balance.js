@@ -5,6 +5,7 @@ function Balance(){
   const [show, setShow]     = React.useState(true);
   const [status, setStatus] = React.useState('');  
   
+  
 
   return (
     <Card
@@ -20,7 +21,9 @@ function Balance(){
 }
 
 function BalanceMsg(props){
+  const currentUser = React.useContext(UserContext);
   return(<>
+    <h1>{currentUser.user}</h1><br/>
     <h5>Your balance is:</h5><br/>
     <h3>${globalBalance}</h3><br/>    
     <button type="submit" 
@@ -32,7 +35,10 @@ function BalanceMsg(props){
 }
 
 function BalanceForm(props){
-  const [email, setEmail]   = React.useState('');
+  // const [email, setEmail]   = React.useState('');
+  const currentUser = React.useContext(UserContext);
+  let email = currentUser.user;
+
   // const [balance, setBalance] = React.useState('');  
   // const ctx = React.useContext(UserContext);  
 
@@ -51,7 +57,8 @@ function BalanceForm(props){
 
   function handle() {
     console.log(email);
-    globalEmail = email;
+    // globalEmail = email;
+
     const url = `/account/balance/${email}`;
     (async () => {
       let res = await fetch(url);
@@ -65,13 +72,7 @@ function BalanceForm(props){
 
   return (<>
 
-    Email<br/>
-    <input type="input" 
-      className="form-control" 
-      placeholder="Enter email" 
-      value={email} 
-      onChange={e => setEmail(e.currentTarget.value)}/><br/>
-
+    Email: {currentUser.user}<br/>
     <button type="submit" 
       className="btn btn-light" 
       onClick={handle}>

@@ -27,6 +27,7 @@ function CreateForm(props){
   const [name, setName]         = React.useState('');
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
+  const currentUser             = React.useContext(UserContext);
   // const [balance, setBalance]   = React.useState(0);
   // original
   // const ctx = React.useContext(UserContext);  
@@ -37,7 +38,9 @@ function CreateForm(props){
   // }    
 
   function handle() {
+    
     console.log(name, email, password);
+    currentUser.user = email;
     const url = `/account/create/${name}/${email}/${password}`;
     (async () => {
       let res = await fetch(url);
