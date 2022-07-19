@@ -65,6 +65,13 @@ app.get("/account/login/:email/:password", (req, res) => {
         })
 })
 
+app.get("/account/balance/:email", (req, res) => {
+    dal.findOne(req.params.email). 
+        then((user) => {
+            console.log(user);
+            res.send(user);
+        });
+})
 
 // all accounts
 
