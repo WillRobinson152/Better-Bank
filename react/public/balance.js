@@ -4,9 +4,6 @@ let globalBalance = 0;
 function Balance(){
   const [show, setShow]     = React.useState(true);
   const [status, setStatus] = React.useState('');  
-  
-  
-
   return (
     <Card
       bgcolor="info"
