@@ -1,6 +1,8 @@
 function NavBar(props){
   const currentUser = React.useContext(UserContext);
-  if (!currentUser) {
+  
+  
+  if (currentUser.user.email === '') {
   return(
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="#">BadBank</a>
