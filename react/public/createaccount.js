@@ -2,6 +2,7 @@ function CreateAccount(){
   const [show, setShow]     = React.useState(true);
   const [status, setStatus] = React.useState('');
   const currentUser         = React.useContext(UserContext);
+  const [header, setHeader] = React.useState(false);
 
   function CreateMsg(props){
     
@@ -12,6 +13,55 @@ function CreateAccount(){
         className="btn btn-light" 
         onClick={() => props.setShow(true)}>Add another account</button>
     </>);
+  }
+
+  function PrivateNav(){
+    return(<nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <a className="navbar-brand" href="#">BadBank</a>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <a className="nav-link" href="#/login/">Login</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#/deposit/">Deposit</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#/withdraw/">Withdraw</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#/balance/">Balance</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#/alldata/">AllData</a>
+                </li>          
+              </ul>
+            </div>
+          </nav>)
+  }
+
+  function PublicNav(){
+    return(
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="#">BadBank</a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a className="nav-link" href="#/CreateAccount/">Create Account</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#/login/">Login</a>
+            </li>          
+          </ul>
+        </div>
+      </nav>
+    )
   }
 
   function CreateForm(props){
@@ -29,21 +79,19 @@ function CreateAccount(){
     // }    
   
     function handle() {
-      console.log('currentUser', currentUser)
-      console.log(name, email, password);
       currentUser.user = {name,email,password,balance:0};
+      currentUser.login = true;
+      setHeader(true);
       const url = `/account/create/${name}/${email}/${password}`;
       (async () => {
         let res = await fetch(url);
         let data = await res.json();
-        console.log(data);
       })();
       props.setShow(false);
-      console.log('current user...', currentUser)
+      
     }
   
     return (<>
-  
       Name<br/>
       <h1>{currentUser.user.email}</h1><br/>
       <input type="input" 
@@ -76,7 +124,9 @@ function CreateAccount(){
   return (
     <Card
       bgcolor="primary"
-      header="Create Account"
+      header={show ? 
+        <PublicNav setHeader={setHeader}/> : 
+        <PrivateNav setHeader={setHeader}/>}
       status={status}
       body={show ? 
         <CreateForm setShow={setShow} setStatus={setStatus}/> : 
