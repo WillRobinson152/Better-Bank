@@ -2,7 +2,8 @@ function CreateAccount(){
   const [show, setShow]     = React.useState(true);
   const [status, setStatus] = React.useState('');
   const currentUser         = React.useContext(UserContext);
-  const [header, setHeader] = React.useState(false);
+  // const [header, setHeader] = React.useState(false);
+  const [items, setItems]   = React.useState([{href:"#/CreateAccount/", txt:"Create Account"},{href:"#/Login/", txt:"Log in"}])
 
   function CreateMsg(props){
     
@@ -11,58 +12,11 @@ function CreateAccount(){
       <h3>{currentUser.user.email}</h3>
       <button type="submit" 
         className="btn btn-light" 
-        onClick={() => props.setShow(true)}>Add another account</button>
+        onClick={() => {props.setShow(true); setItems([{href:"#/CreateAccount/", txt:"Create Account"},{href:"#/Login/", txt:"Log in"}])}}>Logout</button>
     </>);
   }
 
-  function PrivateNav(){
-    return(<nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a className="navbar-brand" href="#">BadBank</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <a className="nav-link" href="#/login/">Login</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#/deposit/">Deposit</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#/withdraw/">Withdraw</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#/balance/">Balance</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#/alldata/">AllData</a>
-                </li>          
-              </ul>
-            </div>
-          </nav>)
-  }
-
-  function PublicNav(){
-    return(
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">BadBank</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link" href="#/CreateAccount/">Create Account</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#/login/">Login</a>
-            </li>          
-          </ul>
-        </div>
-      </nav>
-    )
-  }
+  
 
   function CreateForm(props){
     const [name, setName]         = React.useState('');
@@ -81,7 +35,7 @@ function CreateAccount(){
     function handle() {
       currentUser.user = {name,email,password,balance:0};
       currentUser.login = true;
-      setHeader(true);
+      setItems([{href:"#/Deposit/", txt:"Deposit"},{href:"#/Login/", txt:"Log out"}]);
       const url = `/account/create/${name}/${email}/${password}`;
       (async () => {
         let res = await fetch(url);
@@ -120,18 +74,21 @@ function CreateAccount(){
   
     </>);
   }
-
-  return (
+  
+  return (<>
+    <Nav 
+      brand="Bad Bank"
+      navItems={items}
+    />
     <Card
       bgcolor="primary"
-      header={show ? 
-        <PublicNav setHeader={setHeader}/> : 
-        <PrivateNav setHeader={setHeader}/>}
+      header="Create Account"
       status={status}
       body={show ? 
         <CreateForm setShow={setShow} setStatus={setStatus}/> : 
         <CreateMsg setShow={setShow}/>}
     />
+    </>
   )
 }
 
