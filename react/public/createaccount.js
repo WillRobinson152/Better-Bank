@@ -40,6 +40,13 @@ function CreateAccount(){
           //     setTimeout(() => setStatus(''),3000);
         return false;
       }
+      else if (label === 'email') {
+        if ((field.indexOf('@') == -1) || (field.split('@')[field.split('@').length - 1].indexOf('.') == -1)) {
+            alert('Email address must be in ****@***.*** format.')
+        return false;
+        }
+        
+    }
       else if (label === 'password') {
           if (field.length < 8) {
               alert('Password must be at least 8 characters.')
