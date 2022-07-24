@@ -4,7 +4,9 @@ function NavBar(){
   const privateNav          = [{href:"#", txt:"Log out", onclick:() => {fetch("/account/current/nouser/-/-"); window.location.href="#"; window.location.reload(true)}},
                                {href:"#/Deposit/", txt:"Deposit", onclick:()=>{}},
                                {href:"#/Withdraw/", txt:"Withdraw", onclick:()=>{}},
-                               {href:"#/Balance/", txt:"Balance", onclick:()=>{}}]
+                               {href:"#/Balance/", txt:"Balance", onclick:()=>{}},
+                               {href:"#/Transactions/", txt:"Transactions", onclick:()=>{}}
+                              ]
   const currentUser         = React.useContext(UserContext);
   const [data, setData]     = React.useState('');
   React.useEffect(() => {

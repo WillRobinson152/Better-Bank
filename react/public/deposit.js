@@ -37,6 +37,8 @@ function DepositForm(props){
     })();
     props.setShow(false);
     currentUser.user.balance = Number(currentUser.user.balance) + Number(amount);
+    currentUser.trans.push({action:'deposit', amount:currentUser.user.balance})
+    console.log(currentUser.trans)
   }
 
 
