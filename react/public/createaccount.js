@@ -11,10 +11,11 @@ function CreateAccount(){
       <button type="submit" 
         className="btn btn-light" 
         onClick={() => {window.location.href="#"; window.location.reload(true)}}>Go to bank</button><br/>
+      <br/>
       <button type="submit" 
         className="btn btn-light" 
         onClick={() => {props.setShow(true); (async () => {
-          await fetch("/account/current/nonuser");
+          await fetch("/account/current/nouser/-/-");
           })();
           window.location.href="#"; window.location.reload(true)}}>Log out</button>
     </>);
@@ -39,7 +40,7 @@ function CreateAccount(){
     function handle() {
       currentUser.user = {name,email,password,balance:0};
       const url = `/account/create/${name}/${email}/${password}`;
-      const url2 = "/account/current/user"; 
+      const url2 = `/account/current/user/${email}/${password}`; 
       (async () => {
         let res = await fetch(url);
         let data = await res.json();

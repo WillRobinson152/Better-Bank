@@ -1,7 +1,7 @@
 function NavBar(){
   const publicNav           = [{href:"#/CreateAccount/", txt:"Create Account", onclick:()=>{}},
                                {href:"#/Login/", txt:"Log in", onclick:()=>{}}] 
-  const privateNav          = [{href:"#", txt:"Log out", onclick:() => {fetch("/account/current/nouser"); window.location.href="#"; window.location.reload(true)}},
+  const privateNav          = [{href:"#", txt:"Log out", onclick:() => {fetch("/account/current/nouser/-/-"); window.location.href="#"; window.location.reload(true)}},
                                {href:"#/Deposit/", txt:"Deposit", onclick:()=>{}},
                                {href:"#/Withdraw/", txt:"Withdraw", onclick:()=>{}},
                                {href:"#/Balance/", txt:"Balance", onclick:()=>{}}]

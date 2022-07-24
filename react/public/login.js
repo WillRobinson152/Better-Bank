@@ -10,11 +10,12 @@ function Login(){
       <button type="submit" 
         className="btn btn-light" 
         onClick={() => {window.location.href="#"; window.location.reload(true)}}>Go to bank</button><br/>
+      <br/>
       <button type="submit" 
         className="btn btn-light" 
         onClick={() => {
           props.setShow(true); (async () => {
-          await fetch("/account/current/nonuser");
+          await fetch("/account/current/nonuser/-/-");
           })();
           window.location.href="#"; window.location.reload(true)}
           }>
@@ -53,7 +54,7 @@ function Login(){
       currentUser.user = {email, password};
       console.log(email, password);
       const url = `/account/login/${email}/${password}`;
-      const url2 = "/account/current/user"; 
+      const url2 = `/account/current/user/${email}/${password}`; 
       (async () => {
         let res = await fetch(url);
         let data = await res.json();

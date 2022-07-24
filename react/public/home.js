@@ -6,40 +6,36 @@ function Home(){
                                {href:"#/Withdraw/", txt:"Withdraw", onclick:()=>{}},
                                {href:"#/Balance/", txt:"Balance", onclick:()=>{}}]
   const currentUser         = React.useContext(UserContext);
+  const [user, setUser]     = React.useState(user);
   const [data, setData]     = React.useState(data);
   React.useEffect(() => {
-
-    // fetch all accounts from API
     fetch("/account/currentuser")
       .then(response => response.json())
-      .then(data => {
-        console.log(data[data.length-1].name);
-        setData(data[data.length -1 ].name);
+      .then(user => {
+        setUser(user[user.length - 1 ]);
+        fetch(`/account/currentuser/findone/${user[user.length - 1 ].email}/${user[user.length - 1 ].password}`)
+          .then(response => response.json())
+          .then(data => {
+            setData(data.name);
+          });
       })
+    
+    
   }, []);
-  if (data === 'user')
-  {
-  return (<>
-    {/* <Nav 
-      brand="BadBank"
-      navItems={privateNav}
-    /> */}
-    <Card
-      txtcolor="black"
-      header="BadBank Landing Module"
-      title="Welcome to the bank"
-      text="You can move around using the navigation bar."
-      body={(<img src="bank.png" className="img-fluid" alt="Responsive image"/>)}
-    />
-    </>
-  );  
+  if (data){
+    const welcome = `Welcome to the bank, ${data}!`
+    return (
+      <Card
+        txtcolor="black"
+        header={welcome}
+        title="Welcome to the bank"
+        text="You can move around using the navigation bar."
+        body={(<img src="bank.png" className="img-fluid" alt="Responsive image"/>)}
+      />
+    );  
 }
 else {
   return (<>
-    {/* <Nav 
-      brand="Bad Bank"
-      navItems={publicNav}
-    /> */}
     <Card
       txtcolor="black"
       header="BadBank Landing Module"
