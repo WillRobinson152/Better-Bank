@@ -1,33 +1,19 @@
-let globalEmail = '';
-let globalBalance = 0;
-
 function Balance(){
-  const [show, setShow]     = React.useState(true);
-  const [status, setStatus] = React.useState('');  
+  const currentUser = React.useContext(UserContext);
   return (
     <Card
       bgcolor="info"
       header="Balance"
-      status={status}
-      body={show ?
-        <BalanceForm setShow={setShow} setStatus={setStatus}/> :
-        <BalanceMsg setShow={setShow}/>}
+      body={<BalanceMsg/>}
     />
   )
 
-}
 
 function BalanceMsg(props){
-  const currentUser = React.useContext(UserContext);
   return(<>
-    <h1>{currentUser.user}</h1><br/>
+    <h1>{currentUser.user.name}</h1><br/>
     <h5>Your balance is:</h5><br/>
-    <h3>${globalBalance}</h3><br/>    
-    <button type="submit" 
-      className="btn btn-light" 
-      onClick={() => props.setShow(true)}>
-        Check balance again
-    </button>
+    <h3>${currentUser.user.balance}</h3><br/>    
   </>);
 }
 
@@ -77,4 +63,5 @@ function BalanceForm(props){
     </button>
 
   </>);
+}
 }

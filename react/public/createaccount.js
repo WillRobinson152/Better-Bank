@@ -1,6 +1,6 @@
 function CreateAccount(){
   const [show, setShow]     = React.useState(true);
-  const [status, setStatus] = React.useState('');
+  // const [status, setStatus] = React.useState('');
   const currentUser         = React.useContext(UserContext);
 
   function CreateMsg(props){
@@ -27,6 +27,29 @@ function CreateAccount(){
     const [name, setName]         = React.useState('');
     const [email, setEmail]       = React.useState('');
     const [password, setPassword] = React.useState('');
+
+    function validate(field, label){
+      if (!field) {
+          if (label === 'email') {
+              alert('You must enter an ' + label + ' address.');
+          }
+          else {
+              alert('You must enter a ' + label + '.')
+          }
+          // setStatus('Error: ' + label);
+          //     setTimeout(() => setStatus(''),3000);
+        return false;
+      }
+      else if (label === 'password') {
+          if (field.length < 8) {
+              alert('Password must be at least 8 characters.')
+              // setStatus('Error: ' + label);
+              // setTimeout(() => setStatus(''),3000);
+          return false;
+          }
+      }
+      return true;
+  }
     
     // const [balance, setBalance]   = React.useState(0);
     // original
@@ -38,6 +61,9 @@ function CreateAccount(){
     // }    
   
     function handle() {
+      if (!validate(name,     'name'))     return;
+      if (!validate(email,    'email'))    return;
+      if (!validate(password, 'password')) return;
       currentUser.user = {name,email,password,balance:0};
       const url = `/account/create/${name}/${email}/${password}`;
       const url2 = `/account/current/user/${email}/${password}`; 
@@ -89,7 +115,7 @@ function CreateAccount(){
       header="Create Account"
       status={status}
       body={show ? 
-        <CreateForm setShow={setShow} setStatus={setStatus}/> : 
+        <CreateForm setShow={setShow}/> : 
         <CreateMsg setShow={setShow}/>}
     />
   )

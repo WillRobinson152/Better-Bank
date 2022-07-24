@@ -12,18 +12,19 @@ function Home(){
     fetch("/account/currentuser")
       .then(response => response.json())
       .then(user => {
-        setUser(user[user.length - 1 ]);
-        fetch(`/account/currentuser/findone/${user[user.length - 1 ].email}/${user[user.length - 1 ].password}`)
+        setUser(user[user.length - 1]);
+        fetch(`/account/currentuser/findone/${user[user.length - 1].email}/${user[user.length - 1].password}`)
           .then(response => response.json())
           .then(data => {
-            setData(data.name);
+            setData(data);
           });
       })
     
     
   }, []);
   if (data){
-    const welcome = `Welcome to the bank, ${data}!`
+    currentUser.user = data;
+    const welcome = `Welcome to the bank, ${data.name}!`
     return (
       <Card
         txtcolor="black"

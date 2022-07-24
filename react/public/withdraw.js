@@ -1,6 +1,7 @@
 function Withdraw(){
   const [show, setShow]     = React.useState(true);
   const [status, setStatus] = React.useState('');  
+  const currentUser = React.useContext(UserContext);
 
   return (
     <Card
@@ -12,7 +13,6 @@ function Withdraw(){
         <WithdrawMsg setShow={setShow}/>}
     />
   )
-}
 
 function WithdrawMsg(props){
   return(<>
@@ -26,7 +26,6 @@ function WithdrawMsg(props){
 }
 
 function WithdrawForm(props){
-  const [email, setEmail]   = React.useState('');
   const [amount, setAmount] = React.useState('');
   // const ctx = React.useContext(UserContext);  
 
@@ -45,26 +44,18 @@ function WithdrawForm(props){
   // }
 
   function handle() {
-    console.log(email, amount);
-    const url = `/account/withdraw/${email}/${amount}`;
+    const url = `/account/withdraw/${currentUser.user.email}/${amount}`;
     (async () => {
       let res = await fetch(url);
       let data = await res.json();
       console.log(data);
     })();
     props.setShow(false);
+    currentUser.user.balance = Number(currentUser.user.balance) - Number(amount);
   }
 
 
   return(<>
-
-    Email<br/>
-    <input type="input" 
-      className="form-control" 
-      placeholder="Enter email" 
-      value={email} 
-      onChange={e => setEmail(e.currentTarget.value)}/><br/>
-
     Amount<br/>
     <input type="number" 
       className="form-control" 
@@ -79,4 +70,5 @@ function WithdrawForm(props){
     </button>
 
   </>);
+}
 }
