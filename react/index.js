@@ -27,7 +27,26 @@ app.get("/account/create/:name/:email/:password", (req, res) => {
         then((user) => {
             console.log(user);
             res.send(user);
-        });
+        })
+});
+
+//set current
+app.get("/account/current/:name", (req, res) => {
+    //else create user
+    dal.setCurrent(req.params.name).
+        then((user) => {
+            console.log(user);
+            res.send(user);
+        })
+});
+
+//set current
+app.get("/account/currentuser", (req, res) => {
+    dal.getCurrent().
+        then((docs) => {
+            console.log(docs);
+            res.send(docs);
+    });
 });
 
 //deposit

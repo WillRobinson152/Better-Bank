@@ -10,6 +10,28 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client) {
     db = client.db('myproject');
 });
 
+// set current user
+function setCurrent(name){
+    return new Promise((resolve, reject) => {    
+        const collection = db.collection('currentuser');
+        const doc = {name};
+        collection.insertOne(doc, {w:1}, function(err, result) {
+            err ? reject(err) : resolve(doc);
+        });    
+    })
+}
+
+function getCurrent(){
+    return new Promise((resolve, reject) => {    
+        const customers = db
+            .collection('currentuser')
+            .find({})
+            .toArray(function(err, docs) {
+                err ? reject(err) : resolve(docs);
+        });    
+    })
+}
+
 // create user account
 function create(name, email, password){
     return new Promise((resolve, reject) => {    
@@ -85,4 +107,4 @@ function all(){
     })
 }
 
-module.exports = {create, login, findOne, find, update, all};
+module.exports = {create, login, findOne, find, update, all, setCurrent, getCurrent};

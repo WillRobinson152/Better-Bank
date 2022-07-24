@@ -2,17 +2,21 @@ function CreateAccount(){
   const [show, setShow]     = React.useState(true);
   const [status, setStatus] = React.useState('');
   const currentUser         = React.useContext(UserContext);
-  // const [header, setHeader] = React.useState(false);
-  const [items, setItems]   = React.useState([{href:"#/CreateAccount/", txt:"Create Account"},{href:"#/Login/", txt:"Log in"}])
 
   function CreateMsg(props){
     
     return(<>
       <h5>Success</h5><br/>
-      <h3>{currentUser.user.email}</h3>
+      <h3>{currentUser.user.name}'s account was created!</h3>
       <button type="submit" 
         className="btn btn-light" 
-        onClick={() => {props.setShow(true); setItems([{href:"#/CreateAccount/", txt:"Create Account"},{href:"#/Login/", txt:"Log in"}])}}>Logout</button>
+        onClick={() => {window.location.href="#"; window.location.reload(true)}}>Go to bank</button><br/>
+      <button type="submit" 
+        className="btn btn-light" 
+        onClick={() => {props.setShow(true); (async () => {
+          await fetch("/account/current/nonuser");
+          })();
+          window.location.href="#"; window.location.reload(true)}}>Log out</button>
     </>);
   }
 
@@ -34,14 +38,17 @@ function CreateAccount(){
   
     function handle() {
       currentUser.user = {name,email,password,balance:0};
-      currentUser.login = true;
-      setItems([{href:"#/Deposit/", txt:"Deposit"},{href:"#/Login/", txt:"Log out"}]);
       const url = `/account/create/${name}/${email}/${password}`;
+      const url2 = "/account/current/user"; 
       (async () => {
         let res = await fetch(url);
         let data = await res.json();
       })();
+      (async () => {
+        let res = await fetch(url2);
+      })();
       props.setShow(false);
+      
       
     }
   
@@ -75,11 +82,7 @@ function CreateAccount(){
     </>);
   }
   
-  return (<>
-    <Nav 
-      brand="Bad Bank"
-      navItems={items}
-    />
+  return (
     <Card
       bgcolor="primary"
       header="Create Account"
@@ -88,7 +91,6 @@ function CreateAccount(){
         <CreateForm setShow={setShow} setStatus={setStatus}/> : 
         <CreateMsg setShow={setShow}/>}
     />
-    </>
   )
 }
 

@@ -1,64 +1,23 @@
 function Login(){
   const [show, setShow]     = React.useState(true);
   const [status, setStatus] = React.useState(''); 
-  const currentUser         = React.useContext(UserContext);
-  const [header, setHeader] = React.useState(false);
-
-  function PrivateNav(){
-    return(<nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a className="navbar-brand" href="#">BadBank</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <a className="nav-link" href="#/login/">Logout</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#/deposit/">Deposit</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#/withdraw/">Withdraw</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#/balance/">Balance</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#/alldata/">AllData</a>
-                </li>          
-              </ul>
-            </div>
-          </nav>)
-  }
-
-  function PublicNav(){
-    return(
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">BadBank</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link" href="#/CreateAccount/">Create Account</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#/login/">Login</a>
-            </li>          
-          </ul>
-        </div>
-      </nav>
-    )
-  }
+  const currentUser         = React.useContext(UserContext);  
 
   function LoginMsg(props){
+    console.log(currentUser.user);
     return(<>
-      <h5>Success</h5>
+      <h1>Success: {currentUser.user.email} is logged in</h1>
       <button type="submit" 
         className="btn btn-light" 
-        onClick={() => props.setShow(true)}>
+        onClick={() => {window.location.href="#"; window.location.reload(true)}}>Go to bank</button><br/>
+      <button type="submit" 
+        className="btn btn-light" 
+        onClick={() => {
+          props.setShow(true); (async () => {
+          await fetch("/account/current/nonuser");
+          })();
+          window.location.href="#"; window.location.reload(true)}
+          }>
           Log Out
       </button>
     </>);
@@ -91,12 +50,13 @@ function Login(){
     // }
   
     function handle() {
+      currentUser.user = {email, password};
       console.log(email, password);
       const url = `/account/login/${email}/${password}`;
+      const url2 = "/account/current/user"; 
       (async () => {
         let res = await fetch(url);
         let data = await res.json();
-        console.log(data);
         if (data.length === 0){
           console.log('Incorrect email or password');
           props.setStatus('fail!');
@@ -104,9 +64,14 @@ function Login(){
         }
         props.setStatus('');
         props.setShow(false);
-        setHeader(true);
+        // currentUser.user.name = data[0].name;
+        // currentUser.user.email = data[0].email;
+        // currentUser.user.password = data[0].password;
+        // currentUser.user.balance = data[0].balance;
       })();
-      
+      (async () => {
+        let res = await fetch(url2);
+      })();
     }
   
     return (<>
@@ -131,17 +96,16 @@ function Login(){
     </>);
   }
 
-  return (
+  return (<>
     <Card
       bgcolor="secondary"
-      header={show ? 
-        <PublicNav setHeader={setHeader}/> : 
-        <PrivateNav setHeader={setHeader}/>}
+      header="Log in"
       status={status}
       body={show ? 
         <LoginForm setShow={setShow} setStatus={setStatus}/> :
         <LoginMsg setShow={setShow} setStatus={setStatus}/>}
     />
+    </>
   ) 
 }
 
