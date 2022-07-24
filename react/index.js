@@ -51,6 +51,13 @@ app.get("/account/currentuser", (req, res) => {
     });
 });
 
+app.get("/account/find/:email", (req, res) => {
+    dal.find(req.params.email). 
+        then((user) => {
+            res.send(user);
+        });
+});
+
 app.get("/account/currentuser/findone/:email/:password", (req, res) => {
     dal.findOne(req.params.email, req.params.password). 
         then((user) => {

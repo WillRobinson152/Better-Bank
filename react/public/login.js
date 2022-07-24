@@ -24,6 +24,20 @@ function Login(){
     </>);
   }
   
+  function validate(field, label){
+    if (!field) {
+        if (label === 'email') {
+            alert('You must enter an ' + label + ' address.');
+        }
+        else {
+            alert('You must enter a ' + label + '.')
+        }
+      return false;
+    }
+    
+    return true;
+}
+
   function LoginForm(props){
     const [email, setEmail]       = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -51,28 +65,26 @@ function Login(){
     // }
   
     function handle() {
-      currentUser.user = {email, password};
-      console.log(email, password);
+      if (!validate(email,    'email'))    return;
+      if (!validate(password, 'password')) return;
       const url = `/account/login/${email}/${password}`;
       const url2 = `/account/current/user/${email}/${password}`; 
       (async () => {
         let res = await fetch(url);
         let data = await res.json();
         if (data.length === 0){
-          console.log('Incorrect email or password');
-          props.setStatus('fail!');
+          alert('Incorrect email or password');
+          // props.setStatus('fail!');
           return;
         }
+        (async () => {
+          let res = await fetch(url2);
+        })();
+        currentUser.user = {email, password};
         props.setStatus('');
         props.setShow(false);
-        // currentUser.user.name = data[0].name;
-        // currentUser.user.email = data[0].email;
-        // currentUser.user.password = data[0].password;
-        // currentUser.user.balance = data[0].balance;
       })();
-      (async () => {
-        let res = await fetch(url2);
-      })();
+      
     }
   
     return (<>

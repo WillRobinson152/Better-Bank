@@ -28,6 +28,22 @@ function CreateAccount(){
     const [email, setEmail]       = React.useState('');
     const [password, setPassword] = React.useState('');
 
+    function checkExisting(email){
+      
+      fetch(`/account/find/${email}`)
+      .then(res => {
+        console.log('theeez one:',res)
+        if (res.length > 0){
+          return true;
+        }
+        else {
+          return false;
+        };
+        });
+      
+      
+    }
+
     function validate(field, label){
       if (!field) {
           if (label === 'email') {
@@ -71,6 +87,7 @@ function CreateAccount(){
       if (!validate(name,     'name'))     return;
       if (!validate(email,    'email'))    return;
       if (!validate(password, 'password')) return;
+      if (!checkExisting(email, password)) {alert('An account already uses that email address. Either use a different address or navigate to log in page.'); return};
       currentUser.user = {name,email,password,balance:0};
       const url = `/account/create/${name}/${email}/${password}`;
       const url2 = `/account/current/user/${email}/${password}`; 
