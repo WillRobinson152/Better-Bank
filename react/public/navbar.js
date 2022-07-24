@@ -5,7 +5,7 @@ function NavBar(){
                                {href:"#/Deposit/", txt:"Deposit", onclick:()=>{}},
                                {href:"#/Withdraw/", txt:"Withdraw", onclick:()=>{}},
                                {href:"#/Balance/", txt:"Balance", onclick:()=>{}},
-                               {href:"#/Transactions/", txt:"Transactions", onclick:()=>{}}
+                               {href:"#/transact/", txt:"Transactions", onclick:()=>{}}
                               ]
   const currentUser         = React.useContext(UserContext);
   const [data, setData]     = React.useState('');
