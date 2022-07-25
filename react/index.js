@@ -7,17 +7,6 @@ const dal       = require("./dal.js")
 app.use(express.static("public"));
 app.use(cors());
 
-// create user account
-
-// original:
-// app.get("/account/create/:name/:email/:password", (req, res) => {
-//     res.send({
-//         name:       req.params.name,
-//         email:      req.params.email,
-//         password:   req.params.password
-//     });
-// });
-
 // with DAL:
 app.get("/account/create/:name/:email/:password", (req, res) => {
     //else create user
@@ -67,9 +56,10 @@ app.get("/account/currentuser/findone/:email/:password", (req, res) => {
 });
 
 //deposit
-app.get("/account/deposit/:email/:amount", (req, res) => {
+app.get("/account/deposit/:email/:amount/:action", (req, res) => {
     dal.update(req.params.email,
-               Number(req.params.amount)).
+               Number(req.params.amount),
+               req.params.action).
         then((user) => {
             console.log(user);
             res.send(user);
@@ -77,22 +67,16 @@ app.get("/account/deposit/:email/:amount", (req, res) => {
 });
 
 //withdraw
-app.get("/account/withdraw/:email/:amount", (req, res) => {
+app.get("/account/withdraw/:email/:amount/:action", (req, res) => {
     dal.update(req.params.email,
-               -1*Number(req.params.amount)).
+               -1*Number(req.params.amount),
+               req.params.action).
         then((user) => {
             console.log(user);
             res.send(user);
         });
 });
 
-// login user
-// app.get("/account/login/:email/:password", (req, res) => {
-//     res.send({
-//         email:      req.params.email,
-//         password:   req.params.password
-//     });
-// });
 app.get("/account/login/:email/:password", (req, res) => {
     dal.login(req.params.email, req.params.password).
         then((user) => {

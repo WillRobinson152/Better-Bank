@@ -30,40 +30,18 @@ function DepositForm(props){
   const [amount, setAmount] = React.useState('');  
 
   function handle() {
-    const url = `/account/deposit/${currentUser.user.email}/${amount}`;
+    const url = `/account/deposit/${currentUser.user.email}/${amount}/deposit`;
     (async () => {
       let res = await fetch(url);
       let data = await res.json();
     })();
     props.setShow(false);
     currentUser.user.balance = Number(currentUser.user.balance) + Number(amount);
-    currentUser.trans.push({action:'deposit', amount:currentUser.user.balance})
+    currentUser.user.trans.push({action:'deposit', amount:amount})
     console.log(currentUser.trans)
   }
 
-
-  // function handle(){
-  //   console.log(email,amount);
-  //   const user = ctx.users.find((user) => user.email == email);
-  //   if (!user) {
-  //     props.setStatus('fail!');
-  //     return;      
-  //   }
-
-  //   user.balance = user.balance + Number(amount);
-  //   console.log(user);
-  //   props.setStatus('');      
-  //   props.setShow(false);
-  // }
-
-  return(<>
-
-    {/* Email<br/>
-    <input type="input" 
-      className="form-control" 
-      placeholder="Enter email" 
-      value={email} onChange={e => setEmail(e.currentTarget.value)}/><br/> */}
-      
+  return(<>      
     Amount<br/>
     <input type="number" 
       className="form-control" 

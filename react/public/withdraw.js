@@ -27,24 +27,9 @@ function WithdrawMsg(props){
 
 function WithdrawForm(props){
   const [amount, setAmount] = React.useState('');
-  // const ctx = React.useContext(UserContext);  
-
-  // function handle(){
-  //   console.log(email,amount);
-  //   const user = ctx.users.find((user) => user.email == email);
-  //   if (!user) {
-  //     props.setStatus('fail!')      
-  //     return;      
-  //   }
-
-  //   user.balance = user.balance - Number(amount);
-  //   console.log(user);
-  //   props.setStatus('');      
-  //   props.setShow(false);
-  // }
 
   function handle() {
-    const url = `/account/withdraw/${currentUser.user.email}/${amount}`;
+    const url = `/account/withdraw/${currentUser.user.email}/${amount}/withdraw`;
     (async () => {
       let res = await fetch(url);
       let data = await res.json();
@@ -52,6 +37,7 @@ function WithdrawForm(props){
     })();
     props.setShow(false);
     currentUser.user.balance = Number(currentUser.user.balance) - Number(amount);
+    currentUser.user.trans.push({action:'withdraw', amount:amount})
   }
 
 
