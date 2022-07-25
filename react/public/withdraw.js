@@ -33,7 +33,6 @@ function WithdrawForm(props){
     (async () => {
       let res = await fetch(url);
       let data = await res.json();
-      console.log(data);
     })();
     props.setShow(false);
     currentUser.user.balance = Number(currentUser.user.balance) - Number(amount);

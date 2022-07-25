@@ -4,7 +4,6 @@ function Login(){
   const currentUser         = React.useContext(UserContext);  
 
   function LoginMsg(props){
-    console.log(currentUser.user);
     return(<>
       <h1>Success: {currentUser.user.email} is logged in</h1>
       <button type="submit" 
@@ -41,29 +40,6 @@ function Login(){
   function LoginForm(props){
     const [email, setEmail]       = React.useState('');
     const [password, setPassword] = React.useState('');
-
-  
-    // const ctx = React.useContext(UserContext);  
-  
-    // function handle(){
-    //   const user = ctx.users.find((user) => user.email == email);
-    //   console.log(user);
-    //   console.log(email, password);
-    //   if (!user) {
-    //     console.log('one')      
-    //     props.setStatus('fail!')      
-    //     return;      
-    //   }
-    //   if (user.password == password) {
-    //     console.log('two')            
-    //     props.setStatus('');
-    //     props.setShow(false);
-    //     return;      
-    //   }
-    //   console.log('three')          
-    //   props.setStatus('fail!');        
-    // }
-  
     function handle() {
       if (!validate(email,    'email'))    return;
       if (!validate(password, 'password')) return;
@@ -74,7 +50,6 @@ function Login(){
         let data = await res.json();
         if (data.length === 0){
           alert('Incorrect email or password');
-          // props.setStatus('fail!');
           return;
         }
         (async () => {

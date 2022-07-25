@@ -1,6 +1,5 @@
 function CreateAccount(){
   const [show, setShow]     = React.useState(true);
-  // const [status, setStatus] = React.useState('');
   const currentUser         = React.useContext(UserContext);
 
   function CreateMsg(props){
@@ -36,8 +35,6 @@ function CreateAccount(){
           else {
               alert('You must enter a ' + label + '.')
           }
-          // setStatus('Error: ' + label);
-          //     setTimeout(() => setStatus(''),3000);
         return false;
       }
       else if (label === 'email') {
@@ -50,8 +47,6 @@ function CreateAccount(){
       else if (label === 'password') {
           if (field.length < 8) {
               alert('Password must be at least 8 characters.')
-              // setStatus('Error: ' + label);
-              // setTimeout(() => setStatus(''),3000);
           return false;
           }
       }

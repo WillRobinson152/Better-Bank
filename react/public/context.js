@@ -4,6 +4,7 @@ const HashRouter  = ReactRouterDOM.HashRouter;
 const UserContext = React.createContext(null);
 
 
+
 function Card(props){
   function classes(){
      
@@ -28,25 +29,3 @@ function Card(props){
   );    
 }
 
-function Nav(props){
-  return (  
-    <>
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        {props.brand && (<a className="navbar-brand" href="#">{props.brand}</a>)}
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            {props.navItems.map(navItem => (
-              <li className="nav-item">
-                <a className="nav-link" href={navItem.href} onClick={navItem.onclick}>{navItem.txt}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
-
-    </>
-  );    
-}

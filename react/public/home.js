@@ -1,10 +1,4 @@
 function Home(){
-  const publicNav           = [{href:"#/CreateAccount/", txt:"Create Account", onclick:()=>{}},
-                               {href:"#/Login/", txt:"Log in", onclick:()=>{}}] 
-  const privateNav          = [{href:"#/CreateAccount/", txt:"Log out", onclick:() => {fetch("/account/current/nouser")}},
-                               {href:"#/Deposit/", txt:"Deposit", onclick:()=>{}},
-                               {href:"#/Withdraw/", txt:"Withdraw", onclick:()=>{}},
-                               {href:"#/Balance/", txt:"Balance", onclick:()=>{}}]
   const currentUser         = React.useContext(UserContext);
   const [user, setUser]     = React.useState(user);
   const [data, setData]     = React.useState(data);

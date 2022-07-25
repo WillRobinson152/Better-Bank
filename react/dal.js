@@ -66,7 +66,7 @@ function find(email){
     })
 }
 
-// find user account
+
 function findOne(email, password){
     return new Promise((resolve, reject) => {    
         const customers = db
@@ -77,7 +77,7 @@ function findOne(email, password){
     })
 }
 
-// update - deposit/withdraw amount
+
 function update(email, amount, action){
     return new Promise((resolve, reject) => {    
         const customers = db

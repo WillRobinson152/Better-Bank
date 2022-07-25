@@ -93,18 +93,6 @@ app.get("/account/balance/:email", (req, res) => {
         });
 })
 
-// all accounts
-
-// original:
-// app.get("/account/all", (req, res) => {
-//     res.send({
-//         name:       "peter",
-//         email:      "peter@mit.edu",
-//         password:   "secret"
-//     });
-// });
-
-// with DAL:
 app.get("/account/all", (req, res) => {
     dal.all().
         then((docs) => {
